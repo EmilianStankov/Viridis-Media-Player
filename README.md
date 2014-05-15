@@ -14,17 +14,17 @@ It will be an all-purpose media player. That means it will be able to play the m
 
 * Basics
 	- Playback for different media formats
-	- _Playlist_ editing
-	- _Play/pause_ button
-	- _Previous_ button
-	- _Next_ button
-	- _Time slider_
+	- __Playlist__ editing
+	- __Play/pause__ button
+	- __Previous__ button
+	- __Next__ button
+	- __Time slider__
 	- _Volume slider_
-	- Switch between _fullscreen_ and _windowed_
+	- Switch between __fullscreen__ and __windowed__
 
 * For the audio
-	- You will be able to _rate_ songs
-	- _Metadata(id3 tags) will be editable_. This includes:
+	- You will be able to __rate__ songs
+	- __Metadata(id3 tags) will be editable__. This includes:
 		+ Performer
 		+ Song title
 		+ Album
@@ -47,4 +47,3 @@ Milestone
 
 For the second milestone I should have implemented most of the backend + tests to go with it.
 This includes building two (__SQLite__) databases (for the _playlists_ and _rating_).
-
