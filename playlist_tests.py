@@ -1,5 +1,5 @@
 import unittest
-from playlist import Playlist
+from playlist import Playlist, load_playlist_from_db
 
 
 class TestPlaylist(unittest.TestCase):
@@ -7,6 +7,10 @@ class TestPlaylist(unittest.TestCase):
 
     def setUp(self):
         self.pl = Playlist("playlist", ["song_one", "song_two"])
+        self.pl.save_to_db()
+
+    def tearDown(self):
+        self.pl.delete_from_db()
 
     def test_get_playlist_name(self):
         self.assertEqual(self.pl.get_name(), "playlist")
@@ -25,6 +29,11 @@ class TestPlaylist(unittest.TestCase):
 
     def test_remove_file_that_is_not_in_playlist(self):
         self.assertRaises(ValueError, self.pl.remove_file("song_three"))
+
+    def test_load_playlist_from_database(self):
+        pl2 = load_playlist_from_db("playlist")
+        self.assertEqual(pl2.get_name(), "playlist")
+        self.assertEqual(pl2.get_files(), ["song_one", "song_two"])
 
 
 if __name__ == '__main__':
