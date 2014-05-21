@@ -41,3 +41,9 @@ I chose viridis since my favourite color is green.
 #### Fun fact
 
 The logo is supposed to resemble a snake head.
+
+Milestone
+---------
+
+For the second milestone I should have implemented most of the backend + tests to go with it.
+This includes building two (__SQLite__) databases (for the _playlists_ and _rating_).
