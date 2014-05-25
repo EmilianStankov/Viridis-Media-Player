@@ -19,7 +19,7 @@ It will be an all-purpose media player. That means it will be able to play the m
 	- __Previous__ button
 	- __Next__ button
 	- __Time slider__
-	- _Volume slider_
+	- __Volume slider__
 	- Switch between __fullscreen__ and __windowed__
 
 * For the audio
@@ -47,3 +47,4 @@ Milestone
 
 For the second milestone I should have implemented most of the backend + tests to go with it.
 This includes building two (__SQLite__) databases (for the _playlists_ and _rating_).
+On second thought I think the _rating_ will be better off in the __id3 tags__. So just one database - to store the playlists in.
