@@ -31,6 +31,9 @@ class Song():
     def __ne__(self, other):
         return int(self.get_rating()) != int(other.get_rating())
 
+    def get_path(self):
+        return self._path
+
     def get_artist(self):
         try:
             return self._tag.artist
