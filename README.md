@@ -60,4 +60,5 @@ What's done so far?
 * `sqlite3`
 * `stagger`
 * `enzyme`
+
 For the gui I will use `PyQt4`.
