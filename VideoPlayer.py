@@ -18,6 +18,7 @@ class VideoPlayer(QtGui.QWidget):
         self.player.load(Phonon.MediaSource(self.url))
         self.player.mediaObject().setTickInterval(200)
         self.player.mediaObject().tick.connect(self.timer)
+
         self.shortcutFull = QtGui.QShortcut(self)
         self.shortcutFull.setKey(QtGui.QKeySequence('F11'))
         self.shortcutFull.setContext(QtCore.Qt.ApplicationShortcut)
