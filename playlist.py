@@ -55,6 +55,7 @@ def load_playlist_from_db(name):
     files = cursor.fetchone()[0].split("$#$")
     return Playlist(name, files)
 
+
 def get_playlists():
     playlists = []
     db_path = sqlite3.connect("playlists.db")
