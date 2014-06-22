@@ -23,16 +23,17 @@ class Playlist():
             pass
 
     def save_to_db(self):
-        db_path = sqlite3.connect("playlists.db")
-        cursor = db_path.cursor()
-        cursor.execute("""CREATE TABLE IF NOT EXISTS playlists
-                          (name UNIQUE, files)""")
-        files_query = ("""INSERT INTO playlists (name, files)
-                          VALUES(?, ?)""")
-        files_data = [self.get_name(), "$#$".join(self.get_files())]
-        cursor.execute(files_query, files_data)
-        db_path.commit()
-        db_path.close()
+        if self.get_name() != "":
+            db_path = sqlite3.connect("playlists.db")
+            cursor = db_path.cursor()
+            cursor.execute("""CREATE TABLE IF NOT EXISTS playlists
+                              (name UNIQUE, files)""")
+            files_query = ("""INSERT INTO playlists (name, files)
+                              VALUES(?, ?)""")
+            files_data = [self.get_name(), "$#$".join(self.get_files())]
+            cursor.execute(files_query, files_data)
+            db_path.commit()
+            db_path.close()
 
     def delete_from_db(self):
         db_path = sqlite3.connect("playlists.db")
@@ -53,3 +54,14 @@ def load_playlist_from_db(name):
     cursor.execute(selection_query, selection_data)
     files = cursor.fetchone()[0].split("$#$")
     return Playlist(name, files)
+
+def get_playlists():
+    playlists = []
+    db_path = sqlite3.connect("playlists.db")
+    cursor = db_path.cursor()
+    cursor.execute("""CREATE TABLE IF NOT EXISTS playlists
+                              (name UNIQUE, files)""")
+    pl = cursor.execute("""SELECT name FROM playlists""")
+    for playlist in pl:
+        playlists.append(playlist[0])
+    return playlists
