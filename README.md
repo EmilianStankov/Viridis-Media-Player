@@ -55,10 +55,19 @@ What's done so far?
 * A __movie__ class. Similar to the song class, this one is for `mkv` files and its methods will be unreachable for other formats. (The player will still support other media formats like `avi` and `wav`, there just won't be any metadata for these formats.)
 * A __playlist__ class, it generates a playlist object, and saves it to a __SQLite database__.There is also a function to generate a playlist from apreviously saved one.
 * I tried writing to the files, to make my own tagging, but could not do it properly. I did manage to write, but could not figure out how to read the data I've just added to the files, so I scratched that idea (for now).
+* You can now add _playlists_ with the help of the gui. You can also _load_ them.
+* The __player__ itself is now ready. It is completely functional. It consists of:
+	- A __Play/Pause__ button
+	- A __time slider__
+	- A __timer__
+	- __Visualization field__ (of course)
+* __Next__ / __Previous__ buttons added. They work as expected.
+* You can switch to __Fullscreen__ using `F11` at any time.
+* Splash screen(sort of)
+* Custom button _icons_
 
-#### Libraries used(for now)
+#### Libraries used
 * `sqlite3`
 * `stagger`
 * `enzyme`
-
-For the gui I will use `PyQt4`.
+* `PyQt4 + Phonon`
