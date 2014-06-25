@@ -78,7 +78,7 @@ class Song():
 
     def get_rating(self):
         try:
-            return self._tag.rating
+            return self._tag[POPM]
         except AttributeError:
             return None
 
@@ -121,9 +121,9 @@ class Song():
     def set_rating(self, rating):
         try:
             if 0 <= int(rating) <= 5:
-                self._tag.rating = rating
+                self._tag[POPM] = rating
             else:
-                self._tag.rating = self.get_rating()
+                self._tag[POPM] = self.get_rating()
         except ValueError:
-            self._tag.rating = self.get_rating()
+            self._tag[POPM] = self.get_rating()
         self._tag.write()
