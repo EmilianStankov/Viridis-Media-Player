@@ -1,6 +1,7 @@
 from PyQt4 import QtCore, QtGui
 from PyQt4.phonon import Phonon
 from song import Song
+from movie import Movie
 
 
 class VideoPlayer(QtGui.QWidget):
@@ -48,6 +49,7 @@ class VideoPlayer(QtGui.QWidget):
         self.play_pause.clicked.connect(self.change_state)
 
         if self.url.endswith(".mp3"):
+            self.shortcut_full.setEnabled(False)
             self.apply_changes_button = QtGui.QPushButton("&Apply changes")
             self.apply_changes_button.setFixedWidth(300)
             self.apply_changes_button.clicked.connect(self.save_tags)
@@ -58,6 +60,26 @@ class VideoPlayer(QtGui.QWidget):
             self.layout.addWidget(self.timer)
             self.top_layout.addLayout(self.layout)
             self.top_layout.addLayout(self.set_mp3_layout())
+            self.setLayout(self.top_layout)
+
+        elif self.url.endswith(".wav"):
+            self.shortcut_full.setEnabled(False)
+            self.layout = QtGui.QHBoxLayout()
+            self.progress_bar.setFixedWidth(300)
+            self.layout.addWidget(self.play_pause)
+            self.layout.addWidget(self.progress_bar)
+            self.layout.addWidget(self.timer)
+            self.setLayout(self.layout)
+
+        elif self.url.endswith(".mkv"):
+            self.top_layout = QtGui.QVBoxLayout()
+            self.top_layout.addWidget(self.player)
+            self.layout = QtGui.QHBoxLayout()
+            self.layout.addWidget(self.play_pause)
+            self.layout.addWidget(self.progress_bar)
+            self.layout.addWidget(self.timer)
+            self.top_layout.addLayout(self.layout)
+            self.top_layout.addLayout(self.set_mkv_layout())
             self.setLayout(self.top_layout)
 
         else:
@@ -84,6 +106,15 @@ class VideoPlayer(QtGui.QWidget):
             videoWidget.exitFullScreen()
         else:
             videoWidget.enterFullScreen()
+
+    def set_mkv_layout(self):
+        self.movie = Movie(self.url)
+        self.mkv_layout = QtGui.QGridLayout()
+        title = self.movie.get_filename()
+        duration = self.movie.get_duration()
+        self.mkv_layout.addWidget(QtGui.QLabel("Title:      {}".format(title)))
+        self.mkv_layout.addWidget(QtGui.QLabel("Length: {}".format(duration)))
+        return self.mkv_layout
 
     def set_mp3_layout(self):
         self.song = Song(self.url)
