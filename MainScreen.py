@@ -60,6 +60,14 @@ class MainScreen(QtGui.QWidget):
         self.scroll_area.setAlignment(QtCore.Qt.AlignHCenter)
         self.layout.addWidget(self.scroll_area)
         self.show_files_button.setDisabled(True)
+        self.hide_files_button.setEnabled(True)
+
+    def hide_files(self):
+        self.layout.removeWidget(self.scroll_area)
+        self.scroll_area.deleteLater()
+        self.scroll_area = None
+        self.show_files_button.setEnabled(True)
+        self.hide_files_button.setDisabled(True)
 
     def create_playlist(self):
         files = QtGui.QFileDialog.getOpenFileNames(
@@ -97,6 +105,11 @@ class MainScreen(QtGui.QWidget):
         self.show_files_button.setFixedWidth(100)
         self.show_files_button.clicked.connect(self.show_files)
 
+        self.hide_files_button = QtGui.QPushButton("&Hide files")
+        self.hide_files_button.setFixedWidth(100)
+        self.hide_files_button.clicked.connect(self.hide_files)
+        self.hide_files_button.setDisabled(True)
+
     def load_playlist(self):
         text = QtGui.QInputDialog.getText(self, 'Load Playlist',
                                           'Enter playlist name:')
@@ -108,8 +121,9 @@ class MainScreen(QtGui.QWidget):
         btn_layout = QtGui.QHBoxLayout()
         btn_layout.addWidget(self.previous_button)
         btn_layout.addWidget(self.next_button)
+        btn_layout.addWidget(self.show_files_button)
+        btn_layout.addWidget(self.hide_files_button)
         self.layout.addLayout(btn_layout)
-        self.layout.addWidget(self.show_files_button)
 
     def remove_initial_screen_widgets(self):
         self.layout.removeWidget(self.load_playlist_button)
@@ -136,12 +150,23 @@ class MainScreen(QtGui.QWidget):
         self.layout.removeWidget(self.previous_button)
         self.previous_button.deleteLater()
         self.previous_button = None
+        self.layout.removeWidget(self.show_files_button)
+        self.show_files_button.deleteLater()
+        self.show_files_button = None
+        self.layout.removeWidget(self.hide_files_button)
+        self.hide_files_button.deleteLater()
+        self.hide_files_button = None
+        if self.scroll_area is not None:
+            self.layout.removeWidget(self.scroll_area)
+            self.scroll_area.deleteLater()
+            self.scroll_area = None
         self.initialize_buttons()
         self.layout.addWidget(self.vp)
         btn_layout = QtGui.QHBoxLayout()
         btn_layout.addWidget(self.previous_button)
         btn_layout.addWidget(self.next_button)
         btn_layout.addWidget(self.show_files_button)
+        btn_layout.addWidget(self.hide_files_button)
         self.layout.addLayout(btn_layout)
 
     def next(self):
