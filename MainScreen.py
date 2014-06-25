@@ -71,15 +71,17 @@ class MainScreen(QtGui.QWidget):
 
     def create_playlist(self):
         files = QtGui.QFileDialog.getOpenFileNames(
-            self, self.tr("Select files"),
-            QtGui.QDesktopServices.storageLocation(
-                QtGui.QDesktopServices.MoviesLocation))
-        text = QtGui.QInputDialog.getText(self, 'Save Playlist',
-                                          'Enter playlist name:')
-        playlist_name = str(text[0])
-        pl = Playlist(playlist_name, files)
-        if playlist_name != "":
-            pl.save_to_db()
+            self, self.tr("Open Image"),
+            "/home/", self.tr(
+                "Music Files (*.mp3 *.wav);;Video Files (*.avi *.mkv);;\
+                Both (*.mp3 *.wav *.avi *.mkv)"))
+        if files:
+            text = QtGui.QInputDialog.getText(self, 'Save Playlist',
+                                              'Enter playlist name:')
+            playlist_name = str(text[0])
+            pl = Playlist(playlist_name, files)
+            if text:
+                pl.save_to_db()
 
     def splash_screen(self):
         label = QLabel()
