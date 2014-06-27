@@ -1,4 +1,4 @@
-Highlighter, QLineEdit {
+Highlighter, QLineEdit, QScrollArea {
     background-color: #a8bc43;
     border-radius: 5px;
     color: #FFFFFF;
