@@ -1,5 +1,5 @@
 import sys
-from MainScreen import MainScreen
+from source.MainScreen import MainScreen
 from PyQt4 import QtGui
 
 
