@@ -2,6 +2,7 @@ from PyQt4 import QtGui, QtCore
 from PyQt4.QtGui import QLabel, QPixmap
 from .playlist import Playlist, load_playlist_from_db, get_playlists
 from .VideoPlayer import VideoPlayer
+from .highlight import Highlighter
 
 
 class MainScreen(QtGui.QWidget):
@@ -13,6 +14,7 @@ class MainScreen(QtGui.QWidget):
         self.splash = self.splash_screen()
         self.__playlists = get_playlists()
         self.scroll_area = None
+        self.show_files_box = None
         self.playlist = None
         self.vp = None
         self.current = 0
@@ -35,10 +37,13 @@ class MainScreen(QtGui.QWidget):
         self.setLayout(self.layout)
 
     def remove(self, widget):
-        if widget is not None:
-            self.layout.removeWidget(widget)
-            widget.deleteLater()
-            widget = None
+        try:
+            if widget is not None:
+                self.layout.removeWidget(widget)
+                widget.deleteLater()
+                widget = None
+        except RuntimeError:
+            pass
 
     def back_to_main(self):
         self.vp.player.pause()
@@ -46,7 +51,7 @@ class MainScreen(QtGui.QWidget):
         self.remove(self.previous_button)
         self.remove(self.show_files_button)
         self.remove(self.hide_files_button)
-        self.remove(self.scroll_area)
+        self.remove(self.show_files_box)
         self.remove(self.vp)
 
         self.splash = self.splash_screen()
@@ -84,22 +89,20 @@ class MainScreen(QtGui.QWidget):
         self.show_playlists_button.setDisabled(True)
 
     def show_files(self):
-        files = QLabel()
-        files.setAlignment(QtCore.Qt.AlignLeft)
-        files_text = ""
+        result = ""
         for file in self.playlist.get_files():
-            files_text += file.split("/")[-1] + "\n"
-        files.setText(files_text)
-        self.scroll_area = QtGui.QScrollArea()
-        self.scroll_area.setAlignment(QtCore.Qt.AlignLeft)
-        self.scroll_area.setFixedHeight(200)
-        self.scroll_area.setWidget(files)
-        self.layout.addWidget(self.scroll_area)
+            result += file.split('/')[-1].replace("(", "").replace(")", "")
+            result += "\n"
+        result = result[:len(result) - 1]
+        self.show_files_box = Highlighter(result, self.vp.url.split('/')[-1])
+        self.show_files_box.setAlignment(QtCore.Qt.AlignLeft)
+        self.show_files_box.setReadOnly(True)
+        self.layout.addWidget(self.show_files_box)
         self.show_files_button.setDisabled(True)
         self.hide_files_button.setEnabled(True)
 
     def hide_files(self):
-        self.remove(self.scroll_area)
+        self.remove(self.show_files_box)
         self.show_files_button.setEnabled(True)
         self.hide_files_button.setDisabled(True)
 
@@ -175,7 +178,7 @@ class MainScreen(QtGui.QWidget):
         self.remove(self.previous_button)
         self.remove(self.show_files_button)
         self.remove(self.hide_files_button)
-        self.remove(self.scroll_area)
+        self.remove(self.show_files_box)
         self.initialize_navigation_buttons()
         self.layout.addWidget(self.vp)
         btn_layout = QtGui.QHBoxLayout()
