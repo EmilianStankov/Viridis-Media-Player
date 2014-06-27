@@ -1,7 +1,7 @@
 Viridis Media Player
 ====================
 
-![alt tag](viridis.bmp)
+![alt tag](source/pics/viridis.bmp)
 
 
 What is this?
