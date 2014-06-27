@@ -19,6 +19,10 @@ class MainScreen(QtGui.QWidget):
         self.vp = None
         self.current = 0
 
+        stylesheet = "source/styles.stylesheet"
+        with open(stylesheet, "r") as f:
+            self.setStyleSheet(f.read())
+
         self.initialize_navigation_buttons()
 
         self.initialize_main_buttons()

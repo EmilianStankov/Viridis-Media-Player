@@ -1,0 +1,46 @@
+Highlighter, QLineEdit {
+    background-color: #a8bc43;
+    border-radius: 5px;
+    color: #FFFFFF;
+    border: 4px solid #51792a;
+}
+
+.MainScreen {
+    background-color: #3a8c39;
+}
+
+QLabel {
+    color: #e2e6b7;
+    font: Impact 20px;
+    font-weight: bold;
+}
+.QPushButton {
+    padding: 3px;
+    font: Impact 17px;
+    font-weight: bold;
+    background-color: #5e902b;
+    color: #FFFFFF;
+    border-radius: 7px 7px 0px 0px;
+    border-bottom: 4px solid #367636;
+    border-right: 4px solid #367636;
+    width: auto;
+    height: 25px;
+}
+
+QPushButton:disabled {
+    color: #e2e6b7;
+    background-color: #b3633b;
+    border-bottom: 4px solid #5e902b;
+    border-right: 4px solid #5e902b;
+}
+
+QPushButton:hover {
+    color: #e2e6b7;
+    background-color: #b3633b;
+    border-bottom: 4px solid #5e902b;
+    border-right: 4px solid #5e902b;
+}
+
+QInputDialog {
+    background-color: #3a8c39;
+}
