@@ -50,14 +50,15 @@ class MainScreen(QtGui.QWidget):
 
     def show_files(self):
         files = QLabel()
+        files.setAlignment(QtCore.Qt.AlignLeft)
         files_text = ""
         for file in self.playlist.get_files():
             files_text += file.split("/")[-1] + "\n"
         files.setText(files_text)
         self.scroll_area = QtGui.QScrollArea()
+        self.scroll_area.setAlignment(QtCore.Qt.AlignLeft)
         self.scroll_area.setFixedHeight(200)
         self.scroll_area.setWidget(files)
-        self.scroll_area.setAlignment(QtCore.Qt.AlignHCenter)
         self.layout.addWidget(self.scroll_area)
         self.show_files_button.setDisabled(True)
         self.hide_files_button.setEnabled(True)
@@ -127,6 +128,8 @@ class MainScreen(QtGui.QWidget):
         btn_layout.addWidget(self.hide_files_button)
         self.layout.addLayout(btn_layout)
 
+        self.vp.player.mediaObject().finished.connect(self.next)
+
     def remove_initial_screen_widgets(self):
         self.layout.removeWidget(self.load_playlist_button)
         self.load_playlist_button.deleteLater()
@@ -183,6 +186,7 @@ class MainScreen(QtGui.QWidget):
         self.vp = None
         self.vp = VideoPlayer(self.playlist.get_files()[self.current])
         self.fix_layout()
+        self.vp.player.mediaObject().finished.connect(self.next)
 
     def previous(self):
         if self.current < 1:

@@ -41,12 +41,20 @@ class VideoPlayer(QtGui.QWidget):
         self.shortcut_play_pause.activated.connect(self.change_state)
 
         self.progress_bar = Phonon.SeekSlider(self.player.mediaObject())
+        self.progress_bar.setFixedHeight(40)
+
+        self.volume_slider = Phonon.VolumeSlider()
+        self.volume_slider.setFixedWidth(120)
+        self.audio = self.player.audioOutput()
+        self.volume_slider.setAudioOutput(self.audio)
 
         self.timer = QtGui.QLabel("00:00:00")
 
         self.play_pause = QtGui.QPushButton()
         self.play_pause.setIcon(QtGui.QIcon('play.png'))
         self.play_pause.clicked.connect(self.change_state)
+
+        self.change_state()
 
         if self.url.endswith(".mp3"):
             self.shortcut_full.setEnabled(False)
@@ -58,18 +66,20 @@ class VideoPlayer(QtGui.QWidget):
             self.layout.addWidget(self.play_pause)
             self.layout.addWidget(self.progress_bar)
             self.layout.addWidget(self.timer)
+            self.layout.addWidget(self.volume_slider)
             self.top_layout.addLayout(self.layout)
             self.top_layout.addLayout(self.set_mp3_layout())
             self.setLayout(self.top_layout)
 
         elif self.url.endswith(".wav"):
             self.shortcut_full.setEnabled(False)
-            self.layout = QtGui.QHBoxLayout()
+            self.top_layout = QtGui.QHBoxLayout()
             self.progress_bar.setFixedWidth(300)
-            self.layout.addWidget(self.play_pause)
-            self.layout.addWidget(self.progress_bar)
-            self.layout.addWidget(self.timer)
-            self.setLayout(self.layout)
+            self.top_layout.addWidget(self.play_pause)
+            self.top_layout.addWidget(self.progress_bar)
+            self.top_layout.addWidget(self.timer)
+            self.top_layout.addWidget(self.volume_slider)
+            self.setLayout(self.top_layout)
 
         elif self.url.endswith(".mkv"):
             self.top_layout = QtGui.QVBoxLayout()
@@ -78,6 +88,7 @@ class VideoPlayer(QtGui.QWidget):
             self.layout.addWidget(self.play_pause)
             self.layout.addWidget(self.progress_bar)
             self.layout.addWidget(self.timer)
+            self.layout.addWidget(self.volume_slider)
             self.top_layout.addLayout(self.layout)
             self.top_layout.addLayout(self.set_mkv_layout())
             self.setLayout(self.top_layout)
@@ -89,6 +100,7 @@ class VideoPlayer(QtGui.QWidget):
             self.layout.addWidget(self.play_pause)
             self.layout.addWidget(self.progress_bar)
             self.layout.addWidget(self.timer)
+            self.layout.addWidget(self.volume_slider)
             self.top_layout.addLayout(self.layout)
             self.setLayout(self.top_layout)
 
