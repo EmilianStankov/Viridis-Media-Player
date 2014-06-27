@@ -39,11 +39,15 @@ class Song():
             return self._tag.artist
         except AttributeError:
             return None
+        except KeyError:
+            return None
 
     def get_title(self):
         try:
             return self._tag.title
         except AttributeError:
+            return None
+        except KeyError:
             return None
 
     def get_genre(self):
@@ -51,11 +55,15 @@ class Song():
             return self._tag.genre
         except AttributeError:
             return None
+        except KeyError:
+            return None
 
     def get_album(self):
         try:
             return self._tag.album
         except AttributeError:
+            return None
+        except KeyError:
             return None
 
     def get_year(self):
@@ -63,11 +71,15 @@ class Song():
             return self._tag[TYER].text[0]
         except AttributeError:
             return None
+        except KeyError:
+            return None
 
     def get_picture(self):
         try:
             return self._tag[APIC]
         except AttributeError:
+            return None
+        except KeyError:
             return None
 
     def get_track(self):
@@ -75,11 +87,15 @@ class Song():
             return self._tag[TRCK].text[0]
         except AttributeError:
             return None
+        except KeyError:
+            return None
 
     def get_rating(self):
         try:
             return self._tag.rating
         except AttributeError:
+            return None
+        except KeyError:
             return None
 
     def set_artist(self, artist):
