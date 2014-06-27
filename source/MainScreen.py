@@ -16,8 +16,51 @@ class MainScreen(QtGui.QWidget):
         self.playlist = None
         self.vp = None
         self.current = 0
-        self.initialize_buttons()
 
+        self.initialize_navigation_buttons()
+
+        self.initialize_main_buttons()
+
+        self.shortcut_back = QtGui.QShortcut(self)
+        self.shortcut_back.setKey(QtGui.QKeySequence('ESC'))
+        self.shortcut_back.setContext(QtCore.Qt.ApplicationShortcut)
+        self.shortcut_back.activated.connect(self.back_to_main)
+
+        self.layout = QtGui.QVBoxLayout()
+        self.layout.setSizeConstraint(QtGui.QLayout.SetFixedSize)
+        self.layout.addWidget(self.splash)
+        self.layout.addWidget(self.create_playlist_button)
+        self.layout.addWidget(self.load_playlist_button)
+        self.layout.addWidget(self.show_playlists_button)
+        self.setLayout(self.layout)
+
+    def remove(self, widget):
+        if widget is not None:
+            self.layout.removeWidget(widget)
+            widget.deleteLater()
+            widget = None
+
+    def back_to_main(self):
+        self.vp.player.pause()
+        self.remove(self.next_button)
+        self.remove(self.previous_button)
+        self.remove(self.show_files_button)
+        self.remove(self.hide_files_button)
+        self.remove(self.scroll_area)
+        self.remove(self.vp)
+
+        self.splash = self.splash_screen()
+
+        self.initialize_main_buttons()
+
+        self.initialize_navigation_buttons()
+
+        self.layout.addWidget(self.splash)
+        self.layout.addWidget(self.create_playlist_button)
+        self.layout.addWidget(self.load_playlist_button)
+        self.layout.addWidget(self.show_playlists_button)
+
+    def initialize_main_buttons(self):
         self.create_playlist_button = QtGui.QPushButton("&Create Playlist")
         self.create_playlist_button.setFixedWidth(300)
         self.create_playlist_button.clicked.connect(self.create_playlist)
@@ -29,14 +72,6 @@ class MainScreen(QtGui.QWidget):
         self.show_playlists_button = QtGui.QPushButton("&Show Playlists")
         self.show_playlists_button.setFixedWidth(300)
         self.show_playlists_button.clicked.connect(self.show_playlists)
-
-        self.layout = QtGui.QVBoxLayout()
-        self.layout.setSizeConstraint(QtGui.QLayout.SetFixedSize)
-        self.layout.addWidget(self.splash)
-        self.layout.addWidget(self.create_playlist_button)
-        self.layout.addWidget(self.load_playlist_button)
-        self.layout.addWidget(self.show_playlists_button)
-        self.setLayout(self.layout)
 
     def show_playlists(self):
         playlists = QLabel()
@@ -64,9 +99,7 @@ class MainScreen(QtGui.QWidget):
         self.hide_files_button.setEnabled(True)
 
     def hide_files(self):
-        self.layout.removeWidget(self.scroll_area)
-        self.scroll_area.deleteLater()
-        self.scroll_area = None
+        self.remove(self.scroll_area)
         self.show_files_button.setEnabled(True)
         self.hide_files_button.setDisabled(True)
 
@@ -93,7 +126,7 @@ class MainScreen(QtGui.QWidget):
         label.setPixmap(logo)
         return label
 
-    def initialize_buttons(self):
+    def initialize_navigation_buttons(self):
         self.next_button = QtGui.QPushButton()
         self.next_button.setIcon(QtGui.QIcon('source/pics/next.png'))
         self.next_button.setFixedWidth(100)
@@ -131,41 +164,19 @@ class MainScreen(QtGui.QWidget):
         self.vp.player.mediaObject().finished.connect(self.next)
 
     def remove_initial_screen_widgets(self):
-        self.layout.removeWidget(self.load_playlist_button)
-        self.load_playlist_button.deleteLater()
-        self.load_playlist_button = None
-        self.layout.removeWidget(self.create_playlist_button)
-        self.create_playlist_button.deleteLater()
-        self.create_playlist_button = None
-        self.layout.removeWidget(self.show_playlists_button)
-        self.show_playlists_button.deleteLater()
-        self.show_playlists_button = None
-        if self.scroll_area is not None:
-            self.layout.removeWidget(self.scroll_area)
-            self.scroll_area.deleteLater()
-            self.scroll_area = None
-        self.layout.removeWidget(self.splash)
-        self.splash.deleteLater()
-        self.splash = None
+        self.remove(self.load_playlist_button)
+        self.remove(self.create_playlist_button)
+        self.remove(self.show_playlists_button)
+        self.remove(self.scroll_area)
+        self.remove(self.splash)
 
     def fix_layout(self):
-        self.layout.removeWidget(self.next_button)
-        self.next_button.deleteLater()
-        self.next_button = None
-        self.layout.removeWidget(self.previous_button)
-        self.previous_button.deleteLater()
-        self.previous_button = None
-        self.layout.removeWidget(self.show_files_button)
-        self.show_files_button.deleteLater()
-        self.show_files_button = None
-        self.layout.removeWidget(self.hide_files_button)
-        self.hide_files_button.deleteLater()
-        self.hide_files_button = None
-        if self.scroll_area is not None:
-            self.layout.removeWidget(self.scroll_area)
-            self.scroll_area.deleteLater()
-            self.scroll_area = None
-        self.initialize_buttons()
+        self.remove(self.next_button)
+        self.remove(self.previous_button)
+        self.remove(self.show_files_button)
+        self.remove(self.hide_files_button)
+        self.remove(self.scroll_area)
+        self.initialize_navigation_buttons()
         self.layout.addWidget(self.vp)
         btn_layout = QtGui.QHBoxLayout()
         btn_layout.addWidget(self.previous_button)
