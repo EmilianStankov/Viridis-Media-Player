@@ -61,8 +61,11 @@ What's done so far?
 	- A __time slider__
 	- A __timer__
 	- __Visualization field__ (of course)
+	- A __volume slider__
 * __Next__ / __Previous__ buttons added. They work as expected.
+* The player now _automatically_ plays the next file in the playlist if the current one finishes playing.
 * You can switch to __Fullscreen__ using `F11` at any time.
+* You can also go back to the main window by pressing `ESC`
 * Splash screen(sort of)
 * Custom button _icons_
 
