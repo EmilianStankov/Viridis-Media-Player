@@ -156,19 +156,19 @@ class MainScreen(QtGui.QWidget):
     def load_playlist(self):
         text = QtGui.QInputDialog.getText(self, 'Load Playlist',
                                           'Enter playlist name:')
-        pl = load_playlist_from_db(str(text[0]))
-        self.playlist = pl
-        self.remove_initial_screen_widgets()
-        self.vp = VideoPlayer(self.playlist.get_files()[0])
-        self.layout.addWidget(self.vp)
-        btn_layout = QtGui.QHBoxLayout()
-        btn_layout.addWidget(self.previous_button)
-        btn_layout.addWidget(self.next_button)
-        btn_layout.addWidget(self.show_files_button)
-        btn_layout.addWidget(self.hide_files_button)
-        self.layout.addLayout(btn_layout)
-
-        self.vp.player.mediaObject().finished.connect(self.next)
+        if text[1] and str(text[0]) != "":
+            pl = load_playlist_from_db(str(text[0]))
+            self.playlist = pl
+            self.remove_initial_screen_widgets()
+            self.vp = VideoPlayer(self.playlist.get_files()[0])
+            self.layout.addWidget(self.vp)
+            btn_layout = QtGui.QHBoxLayout()
+            btn_layout.addWidget(self.previous_button)
+            btn_layout.addWidget(self.next_button)
+            btn_layout.addWidget(self.show_files_button)
+            btn_layout.addWidget(self.hide_files_button)
+            self.layout.addLayout(btn_layout)
+            self.vp.player.mediaObject().finished.connect(self.next)
 
     def remove_initial_screen_widgets(self):
         self.remove(self.load_playlist_button)

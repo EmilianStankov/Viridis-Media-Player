@@ -44,7 +44,7 @@ class VideoPlayer(QtGui.QWidget):
         self.progress_bar.setFixedHeight(40)
 
         self.volume_slider = Phonon.VolumeSlider()
-        self.volume_slider.setFixedWidth(120)
+        self.volume_slider.setFixedWidth(100)
         self.audio = self.player.audioOutput()
         self.volume_slider.setAudioOutput(self.audio)
 

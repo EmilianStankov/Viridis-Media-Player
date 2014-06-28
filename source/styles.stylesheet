@@ -1,4 +1,4 @@
-Highlighter, QLineEdit, QScrollArea {
+Highlighter, QLineEdit, .QScrollArea {
     background-color: #a8bc43;
     border-radius: 5px;
     color: #FFFFFF;
@@ -9,21 +9,21 @@ Highlighter, QLineEdit, QScrollArea {
     background-color: #3a8c39;
 }
 
-QLabel {
+.QLabel {
+    background: rgba(0,0,0,0);
     color: #e2e6b7;
-    font: Impact 20px;
     font-weight: bold;
 }
+
 .QPushButton {
     padding: 3px;
-    font: Impact 17px;
     font-weight: bold;
     background-color: #5e902b;
     color: #FFFFFF;
     border-radius: 7px 7px 0px 0px;
     border-bottom: 4px solid #367636;
     border-right: 4px solid #367636;
-    width: auto;
+    min-width: 50px;
     height: 25px;
 }
 
